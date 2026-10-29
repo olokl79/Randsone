@@ -2,173 +2,262 @@
 <html lang="nn">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ei helsing frå Øyvind Løkling til lesaren av Randsone.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Randsone</title>
+  <meta name="description" content="Ei helsing frå Øyvind Løkling til lesaren av Randsone.">
+  <meta name="theme-color" content="#15110e">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nn_NO">
+  <meta property="og:url" content="https://randsone.no/">
+  <meta property="og:title" content="Randsone">
+  <meta property="og:description" content="Ei helsing frå Øyvind Løkling til lesaren av Randsone.">
+  <meta property="og:image" content="https://randsone.no/randsone-deling.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500&display=swap">
 
   <style>
+    /* Oppsett: eit bokoppslag. Biletet til venstre, helsinga til høgre,
+       og ei mjuk randsone der biletet går over i kvelden rundt. */
     :root {
-      --paper: #f3efe6;
-      --ink: #2e3133;
-      --muted: #6b6d6d;
-      --line: rgba(46, 49, 51, 0.18);
-      --shadow: 0 24px 70px rgba(24, 26, 27, 0.16);
+      --natt: #15110e;
+      --torv: #2a211b;
+      --ljos: #ede3d6;
+      --dempa: #b3a391;
+      --gull: #d6b08a;
+      --f-serif: "Cormorant Garamond", Garamond, Georgia, "Times New Roman", serif;
+      --f-sans: "Figtree", "Helvetica Neue", Arial, sans-serif;
+      --gutter: max(20px, env(safe-area-inset-left, 0px));
+      --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+      color-scheme: dark;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      background: var(--paper);
-    }
+    html { background: var(--natt); }
 
     body {
       margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.72), transparent 46rem),
-        var(--paper);
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.7;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      color: var(--ljos);
+      background: radial-gradient(120% 90% at 28% 18%, var(--torv) 0%, var(--natt) 62%);
+      font-family: var(--f-serif);
+      line-height: 1.45;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Kveldsljoset frå biletet, sterkt uskarpt, som bakgrunn. */
+    .ambient {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .ambient::before {
+      content: "";
+      position: absolute;
+      inset: -15%;
+      background: url("randsone-web.jpg") 30% 40% / cover no-repeat;
+      filter: blur(80px) saturate(1.15);
+      opacity: .22;
+    }
+
     main {
-      width: min(100% - 2rem, 820px);
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      width: 100%;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: clamp(2rem, 6vw, 5rem) 0 clamp(3rem, 8vw, 7rem);
+      padding-block: clamp(28px, 6vw, 88px);
+      padding-left: var(--gutter);
+      padding-right: var(--gutter-r);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, .9fr);
+      gap: clamp(36px, 6vw, 104px);
+      align-items: center;
     }
 
-    .title {
-      margin: 0 0 clamp(1.5rem, 4vw, 2.75rem);
-      text-align: center;
-      font-size: clamp(2rem, 7vw, 4.5rem);
-      font-weight: 400;
-      letter-spacing: 0.24em;
-      line-height: 1.05;
+    figure { margin: 0; }
+
+    .cover img {
+      display: block;
+      width: 100%;
+      height: auto;
+      -webkit-mask-image:
+        linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 5%, #000 93%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 5%, #000 93%, transparent 100%);
+      mask-composite: intersect;
+    }
+
+    .letter {
+      position: relative;
+      padding-left: clamp(24px, 3vw, 44px);
+      max-width: 30rem;
+    }
+    .letter::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 4%;
+      bottom: 4%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gull) 30%, var(--gull) 70%, transparent);
+      opacity: .55;
+    }
+
+    .eyebrow {
+      margin: 0 0 28px;
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .3em;
       text-transform: uppercase;
+      color: var(--gull);
     }
 
-    figure {
-      margin: 0;
+    .letter p { margin: 0; }
+    .letter .eyebrow { margin-bottom: 28px; }
+    .letter .wish { margin-top: 26px; }
+    .letter .signature { margin-top: 52px; }
+
+    .opening {
+      font-size: clamp(27px, 2.7vw, 36px);
+      font-weight: 500;
+      line-height: 1.28;
+      text-wrap: pretty;
     }
 
-    .hero {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 68vh;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 2px;
-    box-shadow: var(--shadow);
-    margin-bottom: clamp(2rem, 6vw, 4rem);
-    }
-
-    .rule {
-      width: 5rem;
-      height: 1px;
-      margin: clamp(2.75rem, 7vw, 5rem) auto;
-      background: var(--line);
-    }
-
-    .message {
-      max-width: 34rem;
-      margin: 0 auto;
-      text-align: center;
-      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
-    }
-
-    .message p {
-      margin: 0 0 1.35rem;
-    }
-
-    .message .opening {
-      font-size: 1.08em;
+    .wish {
+      font-size: clamp(23px, 2.1vw, 28px);
+      font-weight: 500;
+      font-style: italic;
+      color: var(--ljos);
+      text-wrap: balance;
     }
 
     .signature {
-      margin-top: 2.75rem;
-      color: var(--muted);
-      font-size: 0.98em;
+      font-size: 19px;
+      color: var(--dempa);
     }
-
     .name {
       display: block;
-      margin-top: 0.35rem;
-      color: var(--ink);
+      margin-top: 2px;
+      font-size: 40px;
       font-style: italic;
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--ljos);
     }
 
     footer {
-      margin-top: clamp(4rem, 9vw, 7rem);
+      position: relative;
+      z-index: 1;
+      padding-block: 20px calc(32px + env(safe-area-inset-bottom, 0px));
+      padding-left: var(--gutter);
+      padding-right: var(--gutter-r);
       text-align: center;
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
+      font-family: var(--f-sans);
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--dempa);
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 820px) {
       main {
-        width: min(100% - 1.25rem, 820px);
-        padding-top: 1.4rem;
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 0;
+        gap: 8px;
+        align-items: start;
       }
-
-      .title {
-        letter-spacing: 0.16em;
+      .cover {
+        margin-left: calc(-1 * var(--gutter));
+        margin-right: calc(-1 * var(--gutter-r));
       }
-
-      .hero {
-        max-height: 62vh;
+      .cover img {
+        -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
+        -webkit-mask-composite: source-over;
+        mask-composite: add;
       }
+      .letter {
+        padding-left: 0;
+        max-width: 34rem;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .letter::before {
+        position: static;
+        display: block;
+        width: 64px;
+        height: 1px;
+        margin: 0 auto 26px;
+        background: linear-gradient(to right, transparent, var(--gull), transparent);
+      }
+      .letter .eyebrow { margin-bottom: 20px; }
+      .letter .signature { margin-top: 40px; }
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      main {
-        animation: fade-in 900ms ease-out both;
+      .cover img { animation: mist 1.8s ease-out both; }
+      .letter > * { animation: rise 1s ease-out both; }
+      .letter > :nth-child(1) { animation-delay: .5s; }
+      .letter > :nth-child(2) { animation-delay: .7s; }
+      .letter > :nth-child(3) { animation-delay: .95s; }
+      .letter > :nth-child(4) { animation-delay: 1.2s; }
+      @keyframes mist {
+        from { opacity: 0; filter: blur(10px); }
+        to { opacity: 1; filter: blur(0); }
       }
-
-      @keyframes fade-in {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: none; }
       }
     }
   </style>
 </head>
 
 <body>
-  <main>
+  <div class="ambient" aria-hidden="true"></div>
 
-    <figure>
+  <main>
+    <figure class="cover">
       <img
-        class="hero"
-        src="randsone.jpg"
+        src="randsone-web.jpg"
         alt="To kvinner sit med avstand mellom seg på ein benk ved eit stille skogsvatn."
-        width="1800"
-        height="2700"
+        width="1116"
+        height="1059"
       >
     </figure>
 
-    <section class="message" aria-label="Helsing frå forfattaren">
-      <p class="opening">Takk for at du tok deg tid til å lese Randsone.
-        Eg håpar boka gav deg eit lite pusterom.</p>
-
-<p>Måtte fred og kjærleik følgje deg på vegen.</p> 
-
+    <section class="letter" aria-label="Helsing frå forfattaren">
+      <p class="eyebrow">Til lesaren</p>
+      <p class="opening">Takk for at du tok deg tid til å lese Randsone. Eg håpar boka gav deg eit lite pusterom.</p>
+      <p class="wish">Måtte fred og kjærleik følgje deg på vegen.</p>
       <p class="signature">
         Med hjerteleg helsing
         <span class="name">Øyvind</span>
       </p>
     </section>
-
   </main>
+
+  <footer>Øyvind Løkling · Randsone</footer>
 </body>
 </html>
